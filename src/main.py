@@ -1,12 +1,12 @@
 from textnode import TextType, TextNode
+from htmlnode import *
 
 
 def main():
-    text_type = TextType.BOLD
-    text_node = TextNode("some text",
-                         text_type,
-                         "www.google.com")
-    print(text_node)
+    original_text = "Text ![image](https://i.imgur.com/zjjcJKZ.png) more text ![image](https://i.imgur.com/zjjcJKZ.png) even more text."
+    image_markdown = "![image](https://i.imgur.com/zjjcJKZ.png)"
+    sections = original_text.split(image_markdown, 1)
+    print(sections)
 
 
 main()
