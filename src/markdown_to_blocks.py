@@ -5,5 +5,7 @@ def markdown_to_blocks(markdown):
         if block == "":
             continue
         block = block.strip()
+        if block == "":
+            continue
         filtered_blocks.append(block)
     return filtered_blocks

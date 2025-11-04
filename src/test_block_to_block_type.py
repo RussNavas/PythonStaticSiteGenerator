@@ -109,12 +109,3 @@ class TestBlockToBlockType(unittest.TestCase):
         blocks = markdown_to_blocks(md)
         res = block_to_block_type(blocks[0])
         self.assertEqual(res, BlockType.PARAGRAPH)
-# ------------------------------------------------
-'''
-if __name__ == "__main__":
-    md = "# THIS IS A HEADING \n\n"
-    blocks = markdown_to_blocks(md)
-    print(blocks)
-    res = block_to_block_type(blocks[0])
-    print(res)
-'''
