@@ -8,7 +8,7 @@ def _is_hidden(name: str) -> bool:
     return name.startswith(".") or name.startswith("._")
 
 
-def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, basepath):
     for filename in os.listdir(dir_path_content):
         if _is_hidden(filename):
             continue
@@ -19,12 +19,12 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
             if not filename.lower().endswith(".md"):
                 continue
             dest_path = Path(dest_path).with_suffix(".html")
-            generate_page(from_path, template_path, dest_path)
+            generate_page(from_path, template_path, dest_path, basepath)
         else:
-            generate_pages_recursive(from_path, template_path, dest_path)
+            generate_pages_recursive(from_path, template_path, dest_path, basepath)
 
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, basepath):
     print(f" * {from_path} {template_path} -> {dest_path}")
     with open(from_path, "r", encoding="utf-8") as f:
         markdown_content = f.read()
@@ -42,6 +42,8 @@ def generate_page(from_path, template_path, dest_path):
         title = os.path.splitext(os.path.basename(from_path))[0].replace("-", " ").replace("_", " ").title()
     template = template.replace("{{ Title }}", title)
     template = template.replace("{{ Content }}", html)
+    template = template.replace('href="/', 'href="' + basepath)
+    template = template.replace('src="/', 'src="' + basepath)
 
     dest_dir_path = os.path.dirname(dest_path)
     if dest_dir_path != "":
